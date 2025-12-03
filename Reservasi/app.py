@@ -535,6 +535,45 @@ if st.session_state.logged_in:
             st.session_state.role=None
             st.rerun()
 
+
+        st.markdown("---")
+        
+        # Tombol untuk menampilkan form ubah password
+        if "show_update_password" not in st.session_state:
+            st.session_state.show_update_password = False
+
+        if st.button("Ubah Password"):
+            st.session_state.show_update_password = True
+
+        if st.session_state.show_update_password:
+            st.subheader("🔑 Ubah Password")
+            current_user = st.session_state.username
+            old_pass = st.text_input("Password Lama", type="password", key="old_pass")
+            new_pass = st.text_input("Password Baru", type="password", key="new_pass")
+            confirm_pass = st.text_input("Konfirmasi Password Baru", type="password", key="confirm_pass")
+
+            if st.button("Update Password", key="update_pass_btn"):
+                if not old_pass or not new_pass or not confirm_pass:
+                    st.error("Lengkapi semua kolom!")
+                elif new_pass != confirm_pass:
+                    st.error("Password baru dan konfirmasi tidak sama!")
+                else:
+                    conn = get_conn()
+                    c = conn.cursor()
+                    c.execute("SELECT password FROM users WHERE username=?", (current_user,))
+                    result = c.fetchone()
+                    if result and result[0] == old_pass:
+                        c.execute("UPDATE users SET password=? WHERE username=?", (new_pass, current_user))
+                        conn.commit()
+                        conn.close()
+                        st.success("Password berhasil diubah!")
+                        # Sembunyikan form setelah berhasil update
+                        st.session_state.show_update_password = False
+                    else:
+                        st.error("Password lama salah!")
+                
+        st.markdown("---")
+
 # # ---------- SIDEBAR NAVBAR ----------
     st.markdown(" ")
     
@@ -1022,6 +1061,7 @@ if st.session_state.logged_in:
         else:
             st.info("No data reservations yet")
         
+
 
 
 
