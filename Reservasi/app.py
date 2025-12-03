@@ -826,7 +826,7 @@ if st.session_state.logged_in:
                             conn.commit()
                             conn.close()
                             st.error("Computer booking deleted")
-                            st.rerun()
+                            # st.rerun()
 
             else:
                 st.info("No reservations yet.")
@@ -1003,7 +1003,7 @@ if st.session_state.logged_in:
         if st.button("Add New User"):
             if add_user(new_user,new_pass):
                 st.success("User has been successfully added.")
-                st.rerun()
+                # st.rerun()
             else:
                 st.error("Failed, the username may already exist")
         
@@ -1061,6 +1061,7 @@ if st.session_state.logged_in:
         else:
             st.info("No data reservations yet")
         
+
 
 
 
