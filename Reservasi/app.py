@@ -826,7 +826,7 @@ if st.session_state.logged_in:
                             conn.commit()
                             conn.close()
                             st.error("Computer booking deleted")
-                            # st.rerun()
+                            st.rerun()
 
             else:
                 st.info("No reservations yet.")
@@ -1061,6 +1061,7 @@ if st.session_state.logged_in:
         else:
             st.info("No data reservations yet")
         
+
 
 
 
