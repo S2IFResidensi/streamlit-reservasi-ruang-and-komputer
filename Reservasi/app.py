@@ -429,23 +429,64 @@ if "logged_in" not in st.session_state:
 
 # ---------- LOGIN ----------
 
+# if not st.session_state.logged_in:
+#     st.title("🔒 Tel-U Master's Degree in Informatics Student Residence Reservation System Login")
+#     username = st.text_input("Username")
+#     password = st.text_input("Password", type="password")
+#     if st.button("Login"):
+#         role = check_login(username,password)
+#         if role:
+#             st.session_state.logged_in=True
+#             st.session_state.username=username
+#             st.session_state.role=role
+#             st.rerun()
+#         else:
+#             st.error("Incorrect username/password")
+#     st.info("Contact the Admin (Mbak Rana) to register a new user")
+#     st.warning("This is specifically for the celoe room : https://celoe.telkomuniversity.ac.id/auth")
+#     st.warning("For Building C, please contact PSAL via : https://tel-u.ac.id/pinjamruangpasca")
+#     st.warning("If the courtroom at TULT can only be used by employees and lecturers : https://apps-soc.telkomuniversity.ac.id/login")
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
 if not st.session_state.logged_in:
-    st.title("🔒 Tel-U Master's Degree in Informatics Student Residence Reservation System Login")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-    if st.button("Login"):
-        role = check_login(username,password)
-        if role:
-            st.session_state.logged_in=True
-            st.session_state.username=username
-            st.session_state.role=role
-            st.rerun()
-        else:
-            st.error("Incorrect username/password")
-    st.info("Contact the Admin (Mbak Rana) to register a new user")
-    st.warning("This is specifically for the celoe room : https://celoe.telkomuniversity.ac.id/auth")
-    st.warning("For Building C, please contact PSAL via : https://tel-u.ac.id/pinjamruangpasca")
-    st.warning("If the courtroom at TULT can only be used by employees and lecturers : https://apps-soc.telkomuniversity.ac.id/login")
+    # Membuat 3 kolom, tengah untuk card
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("""
+            <div style="
+                background-color:#f0f2f6;
+                padding:20px;
+                border-radius:10px;
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            ">
+            <h4 style="text-align:center;">🔒 Tel-U Master's Degree in Informatics<br>Student Residence Reservation System Login</h4>
+            </div>
+        """, unsafe_allow_html=True)
+
+        # Input username & password
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+
+        # Tombol login
+        if st.button("Login"):
+            role = check_login(username, password)  # fungsi login kamu
+            if role:
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.role = role
+                st.success("Login successful!")
+                st.rerun()
+            else:
+                st.error("Incorrect username/password")
+
+        # Info tambahan
+        st.info("Contact the Admin (Mbak Rana) to register a new user")
+        st.warning("This is specifically for the celoe room : https://celoe.telkomuniversity.ac.id/auth")
+        st.warning("For Building C, please contact PSAL via : https://tel-u.ac.id/pinjamruangpasca")
+        st.warning("If the courtroom at TULT can only be used by employees and lecturers : https://apps-soc.telkomuniversity.ac.id/login")
+
 
 # ---------- NAVBAR ----------
 if st.session_state.logged_in:
@@ -981,6 +1022,7 @@ if st.session_state.logged_in:
         else:
             st.info("No data reservations yet")
         
+
 
 
 
